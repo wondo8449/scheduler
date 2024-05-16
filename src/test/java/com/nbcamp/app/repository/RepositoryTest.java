@@ -19,25 +19,39 @@ public class RepositoryTest {
     BoardRepository boardRepository;
 
     @Test
-    public void saveTest(){
+    void saveTest(){
         Board board = new Board();
-        board.setBoardTitle("제목 테스트4");
-        board.setBoardContent("내용 테스트4");
+        board.setBoardTitle("레포지토리 테스트2");
+        board.setBoardContent("테스트2");
         board.setBoardWriter("김예찬");
-        board.setBoardPassword("1234");
+        board.setBoardPassword("2345");
 
         Assertions.assertThat(boardRepository.save(board)).isEqualTo(board);
     }
 
     @Test
-    public void findAllTest() {
-
+    void findByIdTest() {
+        log.info("일정 : " +boardRepository.findById(3L));
     }
 
-//    @Test
-//    public void modifyTest() {
-//        Board modifyboard = boardRepository.findById(6L);
-//        modifyboard.setBoardContent("수정된 내용");
-//        boardRepository.modify(modifyboard);
-//    }
+    @Test
+    void findAllTest() {
+        log.info("일정 리스트 : " + boardRepository.findAll());
+    }
+
+    @Test
+    void updateTest() {
+        Board foundboard = boardRepository.findById(15L).orElseThrow();
+
+        foundboard.setBoardNumber(15L);
+        foundboard.setBoardTitle("레포지토리 수정 테스트");
+        foundboard.setBoardContent("수정한 내용");
+
+        boardRepository.save(foundboard);
+    }
+
+    @Test
+    void deleteTest() {
+        boardRepository.delete(boardRepository.findById(12L).orElseThrow());
+    }
 }

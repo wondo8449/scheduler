@@ -25,7 +25,7 @@ public class BoardServiceTest {
         board1.setBoardWriter("김예찬");
         board1.setBoardPassword("5678");
 
-        boardService.register(board1);
+        log.info("등록된 일정 : " + boardService.register(board1));
     }
 
     @Test
@@ -36,5 +36,22 @@ public class BoardServiceTest {
     @Test
     void findAllTest() {
         log.info("리스트 : " + boardService.findAll());
+    }
+
+    @Test
+    void modifyTest() {
+        Board board2 = new Board();
+        board2.setBoardNumber(9L);
+        board2.setBoardTitle("Service 테스트2");
+        board2.setBoardContent("Service Test 내용");
+        board2.setBoardWriter("김예찬");
+        board2.setBoardPassword("1234");
+
+        log.info("수정된 일정 : " + boardService.modify(board2));
+    }
+
+    @Test
+    void deleteTest() {
+        boardService.delete(7L);
     }
 }
