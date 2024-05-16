@@ -1,0 +1,5 @@
+1715647697114|3|statement|connection 0|SELECT @@character_set_database, @@sql_mode|SELECT @@character_set_database, @@sql_mode
+1715647697876|12|statement|connection 0|     drop table if exists board|     drop table if exists board
+1715647697901|19|statement|connection 0|     create table board (         board_number bigint not null auto_increment,         board_content varchar(255),         board_title varchar(255),         board_writer varchar(255),         register_date varchar(255),         primary key (board_number)     ) engine=InnoDB|     create table board (         board_number bigint not null auto_increment,         board_content varchar(255),         board_title varchar(255),         board_writer varchar(255),         register_date varchar(255),         primary key (board_number)     ) engine=InnoDB
+1715647699043|2|statement|connection 0|insert into board (board_content,board_title,board_writer,register_date) values (?,?,?,?)|insert into board (board_content,board_title,board_writer,register_date) values ('내용 테스트','제목 테스트','김예찬','2024-05-14 09:48:19')
+1715647699068|2|commit|connection 0||
