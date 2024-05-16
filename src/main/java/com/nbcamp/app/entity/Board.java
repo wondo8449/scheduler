@@ -21,7 +21,6 @@ public class Board extends DateTime{
     private String boardWriter;
     @Column(nullable = false)
     private String boardPassword;
-    private String registerDate;
 
     @Override
     public String toString() {

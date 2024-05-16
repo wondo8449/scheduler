@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class BoardController {
     }
 
     @GetMapping("/read")
-    public BoardDTO read(Long boardNumber) {
+    public BoardDTO read(Long boardNumber) throws NoSuchElementException {
         return boardService.find(boardNumber);
     }
 
@@ -36,19 +37,15 @@ public class BoardController {
 
     @PutMapping("/modify")
     @Transactional
-    public Object modify(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
+    public Object modify(@RequestBody Board board) {
 
-        ObjectMapper mapper = new ObjectMapper();
-        Board boardinput = mapper.treeToValue(saveObj.get("board"), Board.class);
-        Board passwordinput = mapper.treeToValue(saveObj.get("password"), Board.class);
+        Board modifyBoard = boardService.findById(board.getBoardNumber());
 
-        Board modifyBoard = boardService.findById(boardinput.getBoardNumber());
+        if(board.getBoardPassword().equals(modifyBoard.getBoardPassword())) {
 
-        if(passwordinput.getBoardPassword().equals(modifyBoard.getBoardPassword())) {
-
-            modifyBoard.setBoardTitle(boardinput.getBoardTitle());
-            modifyBoard.setBoardContent(boardinput.getBoardContent());
-            modifyBoard.setBoardWriter(boardinput.getBoardWriter());
+            modifyBoard.setBoardTitle(board.getBoardTitle());
+            modifyBoard.setBoardContent(board.getBoardContent());
+            modifyBoard.setBoardWriter(board.getBoardWriter());
 
             return boardService.modify(modifyBoard);
         }
@@ -57,20 +54,21 @@ public class BoardController {
 
     @DeleteMapping("/delete")
     @Transactional
-    public String delete(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
+    public String delete(Long boardNumber, String password) {
 
-        ObjectMapper mapper = new ObjectMapper();
-        Board boardinput = mapper.treeToValue(saveObj.get("board"), Board.class);
-        Board passwordinput = mapper.treeToValue(saveObj.get("password"), Board.class);
+        Board deleteBoard = boardService.findById(boardNumber);
 
-        Board deleteBoard = boardService.findById(boardinput.getBoardNumber());
+        if(password.equals(deleteBoard.getBoardPassword())) {
 
-        if(passwordinput.getBoardPassword().equals(deleteBoard.getBoardPassword())) {
-
-            boardService.delete(boardinput.getBoardNumber());
+            boardService.delete(boardNumber);
 
             return "삭제를 성공하였습니다.";
         }
         return "비밀번호가 틀립니다.";
+    }
+
+    @ExceptionHandler
+    public String handleNoSuchElementFoundException(NoSuchElementException exception) {
+        return "해당 일정은 존재하지 않습니다.";
     }
 }
