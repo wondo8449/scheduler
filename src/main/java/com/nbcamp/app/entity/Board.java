@@ -22,6 +22,15 @@ public class Board extends DateTime{
     @Column(nullable = false)
     private String boardPassword;
 
+    @Builder
+    public Board(String boardTitle, String boardContent, String boardWriter, String boardPassword) {
+        this.boardTitle = boardTitle;
+        this.boardContent = boardContent;
+        this.boardWriter = boardWriter;
+        this.boardPassword = boardPassword;
+    }
+
+
     @Override
     public String toString() {
         return "번호 : " + boardNumber + ",\n 제목 : " + boardTitle + ",\n 내용 : " + boardContent + ",\n 담당자 : "

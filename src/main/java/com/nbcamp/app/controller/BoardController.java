@@ -1,11 +1,12 @@
 package com.nbcamp.app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.nbcamp.app.dto.BoardDTO;
+import com.nbcamp.app.dto.BoardRequestDTO;
+import com.nbcamp.app.dto.BoardResponseDTO;
 import com.nbcamp.app.entity.Board;
 import com.nbcamp.app.service.BoardService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -21,46 +22,45 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/write")
-    public BoardDTO write(@RequestBody Board board) {
+    @Tag(name= "일정 추가", description = "추가할 일정을 입력해주세요")
+    @Parameters({
+            @Parameter(name = "boardTitle", description = "일정 제목", example = "일정 제목을 적어주세요."),
+            @Parameter(name = "boardContent", description = "일정 내용", example = "일정 내용을 적어주세요."),
+            @Parameter(name = "boardWriter", description = "담당자", example = "김예찬"),
+            @Parameter(name = "boardPassword", description = "비밀번호", example = "1234"),
+    })
+    public BoardResponseDTO write(@RequestBody BoardRequestDTO board) {
         return boardService.register(board);
     }
 
     @GetMapping("/read")
-    public BoardDTO read(Long boardNumber) throws NoSuchElementException {
+    public BoardResponseDTO read(@RequestParam Long boardNumber) throws NoSuchElementException {
         return boardService.find(boardNumber);
     }
 
     @GetMapping("/list")
-    public List<BoardDTO> getList() {
+    public List<BoardResponseDTO> getList() {
         return boardService.findAll();
     }
 
     @PutMapping("/modify")
     @Transactional
-    public Object modify(@RequestBody Board board) {
+    public BoardResponseDTO modify(@RequestBody Board board) {
 
-        Board modifyBoard = boardService.findById(board.getBoardNumber());
 
-        if(board.getBoardPassword().equals(modifyBoard.getBoardPassword())) {
 
-            modifyBoard.setBoardTitle(board.getBoardTitle());
-            modifyBoard.setBoardContent(board.getBoardContent());
-            modifyBoard.setBoardWriter(board.getBoardWriter());
-
-            return boardService.modify(modifyBoard);
-        }
-        return "비밀번호가 틀립니다.";
+            return boardService.modify(board);
     }
 
     @DeleteMapping("/delete")
     @Transactional
-    public String delete(Long boardNumber, String password) {
+    public String delete(@RequestBody Board board) {
 
-        Board deleteBoard = boardService.findById(boardNumber);
+        Board deleteBoard = boardService.findById(board.getBoardNumber());
 
-        if(password.equals(deleteBoard.getBoardPassword())) {
+        if(board.getBoardPassword().equals(deleteBoard.getBoardPassword())) {
 
-            boardService.delete(boardNumber);
+            boardService.delete(deleteBoard.getBoardNumber());
 
             return "삭제를 성공하였습니다.";
         }

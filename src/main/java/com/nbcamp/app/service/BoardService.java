@@ -1,6 +1,7 @@
 package com.nbcamp.app.service;
 
-import com.nbcamp.app.dto.BoardDTO;
+import com.nbcamp.app.dto.BoardRequestDTO;
+import com.nbcamp.app.dto.BoardResponseDTO;
 import com.nbcamp.app.entity.Board;
 import com.nbcamp.app.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,32 +18,36 @@ import java.util.stream.Collectors;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public BoardDTO register(Board board) {
-        boardRepository.save(board);
-        return new BoardDTO(board);
+    public BoardResponseDTO register(BoardRequestDTO board) {
+        var newBoard = board.toEntity();
+        boardRepository.save(newBoard);
+        return new BoardResponseDTO(newBoard);
     }
 
-    public BoardDTO find(Long boardNumber) {
+    public BoardResponseDTO find(Long boardNumber) {
         Board foundboard = boardRepository.findById(boardNumber).orElseThrow();
 
-        return new BoardDTO(foundboard);
+        return new BoardResponseDTO(foundboard);
     }
 
-    public List<BoardDTO> findAll() {
+    public List<BoardResponseDTO> findAll() {
        List<Board> boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "registerDate"));
 
-       return boardList.stream().map(e -> new BoardDTO(e)).collect(Collectors.toCollection(ArrayList::new));
+       return boardList.stream().map(e -> new BoardResponseDTO(e)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Transactional
-    public BoardDTO modify(Board board) {
+    public BoardResponseDTO modify(Board board) {
         Board foundboard = findById(board.getBoardNumber());
 
+        if(!(board.getBoardPassword().equals(foundboard.getBoardPassword()))){
+            throw  new IllegalArgumentException("비밀번호가 틀립니다.");
+        }
         foundboard.setBoardTitle(board.getBoardTitle());
         foundboard.setBoardContent(board.getBoardContent());
         foundboard.setBoardContent(board.getBoardContent());
 
-        return new BoardDTO(foundboard);
+        return new BoardResponseDTO(foundboard);
     }
 
     @Transactional

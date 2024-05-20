@@ -4,7 +4,7 @@ import com.nbcamp.app.entity.Board;
 import lombok.Getter;
 
 @Getter
-public class BoardDTO {
+public class BoardResponseDTO {
 
     private Long boardNumber;
     private String boardTitle;
@@ -12,7 +12,7 @@ public class BoardDTO {
     private String boardWriter;
     private String registerDate;
 
-    public BoardDTO(Board board) {
+    public BoardResponseDTO(Board board) {
         this.boardNumber = board.getBoardNumber();
         this.boardTitle = board.getBoardTitle();
         this.boardContent = board.getBoardContent();

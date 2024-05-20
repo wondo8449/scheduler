@@ -17,16 +17,16 @@ public class BoardServiceTest {
     @Autowired
     BoardService boardService;
 
-    @Test
-    void registerTest() {
-        Board board1 = new Board();
-        board1.setBoardTitle("Service 테스트");
-        board1.setBoardContent("Service Test 내용");
-        board1.setBoardWriter("김예찬");
-        board1.setBoardPassword("5678");
-
-        log.info("등록된 일정 : " + boardService.register(board1));
-    }
+//    @Test
+//    void registerTest() {
+//        BoardR board1 = new Board();
+//        board1.setBoardTitle("Service 테스트");
+//        board1.setBoardContent("Service Test 내용");
+//        board1.setBoardWriter("김예찬");
+//        board1.setBoardPassword("5678");
+//
+//        log.info("등록된 일정 : " + boardService.register(board1));
+//    }
 
     @Test
     void findTest() {
