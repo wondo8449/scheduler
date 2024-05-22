@@ -37,8 +37,8 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponseDTO modify(Board board) {
-        Board foundboard = findById(board.getBoardNumber());
+    public BoardResponseDTO modify(Long boardNumber, BoardRequestDTO board) {
+        Board foundboard = findById(boardNumber);
 
         if(!(board.getBoardPassword().equals(foundboard.getBoardPassword()))){
             throw  new IllegalArgumentException("비밀번호가 틀립니다.");
@@ -52,6 +52,7 @@ public class BoardService {
 
     @Transactional
     public void delete(Long boardNumber) {
+
         boardRepository.delete(findById(boardNumber));
     }
 

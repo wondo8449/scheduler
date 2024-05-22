@@ -1,5 +1,6 @@
 package com.nbcamp.app.service;
 
+import com.nbcamp.app.dto.BoardRequestDTO;
 import com.nbcamp.app.entity.Board;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -40,14 +41,13 @@ public class BoardServiceTest {
 
     @Test
     void modifyTest() {
-        Board board2 = new Board();
-        board2.setBoardNumber(9L);
+        BoardRequestDTO board2 = new BoardRequestDTO();
         board2.setBoardTitle("Service 테스트2");
         board2.setBoardContent("Service Test 내용");
         board2.setBoardWriter("김예찬");
         board2.setBoardPassword("1234");
 
-        log.info("수정된 일정 : " + boardService.modify(board2));
+        log.info("수정된 일정 : " + boardService.modify(9L, board2));
     }
 
     @Test
