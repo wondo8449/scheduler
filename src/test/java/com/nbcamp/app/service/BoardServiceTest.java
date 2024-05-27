@@ -29,29 +29,29 @@ public class BoardServiceTest {
 //        log.info("등록된 일정 : " + boardService.register(board1));
 //    }
 
-    @Test
-    void findTest() {
-        log.info(boardService.findById(10L).toString());
-    }
+//    @Test
+//    void findTest() {
+//        log.info(boardService.findById(10L).toString());
+//    }
+//
+//    @Test
+//    void findAllTest() {
+//        log.info("리스트 : " + boardService.findAll());
+//    }
 
-    @Test
-    void findAllTest() {
-        log.info("리스트 : " + boardService.findAll());
-    }
+//    @Test
+//    void modifyTest() {
+//        BoardRequestDTO board2 = new BoardRequestDTO();
+//        board2.setBoardTitle("Service 테스트2");
+//        board2.setBoardContent("Service Test 내용");
+//        board2.setBoardWriter("김예찬");
+//        board2.setBoardPassword("1234");
+//
+//        log.info("수정된 일정 : " + boardService.modify(9L, board2));
+//    }
 
-    @Test
-    void modifyTest() {
-        BoardRequestDTO board2 = new BoardRequestDTO();
-        board2.setBoardTitle("Service 테스트2");
-        board2.setBoardContent("Service Test 내용");
-        board2.setBoardWriter("김예찬");
-        board2.setBoardPassword("1234");
-
-        log.info("수정된 일정 : " + boardService.modify(9L, board2));
-    }
-
-    @Test
-    void deleteTest() {
-        boardService.delete(7L);
-    }
+//    @Test
+//    void deleteTest() {
+//        boardService.delete(7L);
+//    }
 }

@@ -16,18 +16,7 @@ public class BoardResponseDTO {
         this.boardNumber = board.getBoardNumber();
         this.boardTitle = board.getBoardTitle();
         this.boardContent = board.getBoardContent();
-        this.boardWriter = board.getBoardWriter();
+        this.boardWriter = board.getUser().getUserName();
         this.registerDate = board.getRegisterDate();
-    }
-
-    @Override
-    public String toString() {
-        return "BoardDTO{" +
-                "boardNumber=" + boardNumber +
-                ", boardTitle='" + boardTitle + '\'' +
-                ", boardContent='" + boardContent + '\'' +
-                ", boardWriter='" + boardWriter + '\'' +
-                ", registerDate='" + registerDate + '\'' +
-                '}';
     }
 }
