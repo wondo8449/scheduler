@@ -1,9 +1,6 @@
 package com.nbcamp.app.service;
 
-import com.nbcamp.app.dto.BoardRequestDTO;
-import com.nbcamp.app.entity.Board;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;

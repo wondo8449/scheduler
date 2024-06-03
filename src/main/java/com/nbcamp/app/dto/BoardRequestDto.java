@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardRequestDTO {
+public class BoardRequestDto {
 
     @NotEmpty(message = "일정 제목이 비어있습니다.")
     private String boardTitle;

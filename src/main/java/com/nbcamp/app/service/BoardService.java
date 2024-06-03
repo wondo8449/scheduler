@@ -1,7 +1,7 @@
 package com.nbcamp.app.service;
 
-import com.nbcamp.app.dto.BoardRequestDTO;
-import com.nbcamp.app.dto.BoardResponseDTO;
+import com.nbcamp.app.dto.BoardRequestDto;
+import com.nbcamp.app.dto.BoardResponseDto;
 import com.nbcamp.app.entity.Board;
 import com.nbcamp.app.entity.User;
 import com.nbcamp.app.repository.BoardRepository;
@@ -23,7 +23,7 @@ public class BoardService {
     private final UserService userService;
 
     // 일정 등록
-    public BoardResponseDTO register(BoardRequestDTO board, HttpServletRequest request) {
+    public BoardResponseDto register(BoardRequestDto board, HttpServletRequest request) {
         // 받아온 토큰 검증 후 유저 정보를 받아오는 메서드
         User foundUser = userService.checktokenAndFindUser(request);
 
@@ -34,26 +34,26 @@ public class BoardService {
         boardRepository.save(newBoard);
 
         // 리턴해주기 위한 response 객체 생성해서 리턴
-        return new BoardResponseDTO(newBoard);
+        return new BoardResponseDto(newBoard);
     }
 
     // 조회는 누구나 가능하게 하기 위해 기존과 동일
-    public BoardResponseDTO find(Long boardNumber) {
+    public BoardResponseDto find(Long boardNumber) {
         Board foundboard = boardRepository.findById(boardNumber).orElseThrow();
 
-        return new BoardResponseDTO(foundboard);
+        return new BoardResponseDto(foundboard);
     }
 
     // 조회는 누구나 가능하게 하기 위해 기존과 동일
-    public List<BoardResponseDTO> findAll() {
+    public List<BoardResponseDto> findAll() {
        List<Board> boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "registerDate"));
 
-       return boardList.stream().map(e -> new BoardResponseDTO(e)).collect(Collectors.toCollection(ArrayList::new));
+       return boardList.stream().map(e -> new BoardResponseDto(e)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     // 일정 수정
     @Transactional
-    public BoardResponseDTO modify(Long boardNumber, BoardRequestDTO board, HttpServletRequest request) {
+    public BoardResponseDto modify(Long boardNumber, BoardRequestDto board, HttpServletRequest request) {
         // 받아온 토큰 검증 후 유저 정보를 받아오는 메서드
         User foundUser = userService.checktokenAndFindUser(request);
 
@@ -82,7 +82,7 @@ public class BoardService {
         boardRepository.save(foundboard);
 
         // response 객체를 통하여 리턴
-        return new BoardResponseDTO(foundboard);
+        return new BoardResponseDto(foundboard);
     }
 
     // 일정 삭제

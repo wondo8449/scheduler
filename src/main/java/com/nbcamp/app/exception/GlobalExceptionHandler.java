@@ -1,4 +1,4 @@
-package com.nbcamp.app.controller;
+package com.nbcamp.app.exception;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

@@ -1,7 +1,7 @@
 package com.nbcamp.app.controller;
 
-import com.nbcamp.app.dto.BoardRequestDTO;
-import com.nbcamp.app.dto.BoardResponseDTO;
+import com.nbcamp.app.dto.BoardRequestDto;
+import com.nbcamp.app.dto.BoardResponseDto;
 import com.nbcamp.app.entity.Board;
 import com.nbcamp.app.service.BoardService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,7 +25,7 @@ public class BoardController {
 
     @PostMapping("/write")
     @Tag(name= "일정 추가", description = "일정을 추가합니다.")
-    public ResponseEntity write(@RequestBody @Valid BoardRequestDTO board, HttpServletRequest request) {
+    public ResponseEntity write(@RequestBody @Valid BoardRequestDto board, HttpServletRequest request) {
         return ResponseEntity.ok().body(boardService.register(board, request));
     }
 
@@ -38,7 +38,7 @@ public class BoardController {
 
     @GetMapping("/list")
     @Tag(name= "전체 일정 조회", description = "전체 일정을 조회합니다.")
-    public ResponseEntity<List<BoardResponseDTO>> getList() {
+    public ResponseEntity<List<BoardResponseDto>> getList() {
         return ResponseEntity.ok().body(boardService.findAll());
     }
 
@@ -46,7 +46,7 @@ public class BoardController {
     @Tag(name= "일정 수정", description = "일정을 수정합니다.")
     @Parameters({ @Parameter(name = "boardNumber", description = "수정하실 일정 번호를 적어주세요", example = "1")})
     @Transactional
-    public ResponseEntity modify(@PathVariable Long boardNumber, @RequestBody @Valid BoardRequestDTO board, HttpServletRequest request) {
+    public ResponseEntity modify(@PathVariable Long boardNumber, @RequestBody @Valid BoardRequestDto board, HttpServletRequest request) {
         return ResponseEntity.ok().body(boardService.modify(boardNumber, board, request));
     }
 
